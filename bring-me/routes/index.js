@@ -9,12 +9,13 @@ router.get('/', function(req, res, next) {
 });
 
 var passport = require('passport');
-
 var mongoose = require('mongoose');
+
 var Post = mongoose.model('Post');
 var Comment = mongoose.model('Comment');
 var User = mongoose.model('User');
-
+var Vendor = mongoose.model('Vendor');
+var City = mongoose.model('City');
 
 
 router.get('/posts', function(req, res, next) {
@@ -102,7 +103,7 @@ router.post('/register', function(req, res, next){
 
   user.username = req.body.username;
 
-  user.setPassword(req.body.password)
+  user.setPassword(req.body.password);
 
   user.save(function (err){
     if(err){ return next(err); }
@@ -126,6 +127,50 @@ router.post('/login', function(req, res, next){
     }
   })(req, res, next);
 });
+
+/* List cities that we are currently supporting */
+router.get('/cities', function(req, res, next) {
+	City.find(function(err, cities) {
+		if (err) { next(err); }
+
+		res.json(cities);
+	})
+});
+
+
+/*
+*  Below APIs are for BringMe's admins
+*  
+*  TODO: create admin database
+*
+*/
+
+router.post('/city', function(req, res, next){
+	var city = new City(req.body);
+
+	city.save(function(err, city) {
+		if (err) { return next(err); }
+		res.json(city);
+	});
+});
+
+router.post('/vendor', function(req, res, next){
+	var vendor = new Vendor();
+	vendor.name = req.body.name;
+
+	City.findOne({name:req.body.city}, function(err, city) {
+		if (err) return next(err);
+		vendor.city = city;
+
+		vendor.save(function(err, vendor) {
+			if (err) { return next(err); }
+			res.json(vendor);
+		});
+
+	});
+	
+});
+
 
 
 module.exports = router;
