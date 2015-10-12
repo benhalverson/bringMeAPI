@@ -18,7 +18,11 @@
   "homepage": "https://github.com/yumikohey/bringMeAPI#readme",
   "dependencies": {
     "express": "^4.13.3",
+    "express-jwt": "^3.1.0",
+    "jsonwebtoken": "^5.4.0",
     "mongo": "^0.1.0",
-    "mongoose": "^4.1.9"
+    "mongoose": "^4.1.9",
+    "passport": "^0.3.0",
+    "passport-local": "^1.0.0"
   }
 }
