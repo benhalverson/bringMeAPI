@@ -154,19 +154,51 @@ router.post('/city', function(req, res, next){
 	});
 });
 
-router.post('/vendor', function(req, res, next){
+router.param('vendor', function(req, res, next, id) {
+	var query = Vendor.findOneById(id);
+
+	query.exec(function (err, vendor) {
+		if (err) { return next(err); }
+		if (!vendor) { return next(new Error("can't find the vendor")); }
+		
+		req.vendor = vendor;
+		return next();
+	})
+});
+
+router.get('/vendors/:vendor_name', function(req, res, next) {
+	var vendor_name = req.params.vendor_name;
+	Vendor.findOne({ 'name': vendor_name }, function (err, vendor) {
+	  if (err) return next(err);
+	  res.json(vendor);
+	})
+});
+
+router.post('/vendors', function(req, res, next){
 	var vendor = new Vendor();
 	vendor.name = req.body.name;
 
+
+	// Find City's id based on city's name
 	City.findOne({name:req.body.city}, function(err, city) {
 		if (err) return next(err);
 		vendor.city = city;
 
+		// Save the vendor instance
 		vendor.save(function(err, vendor) {
 			if (err) { return next(err); }
 			res.json(vendor);
 		});
 
+	});
+	
+});
+
+router.post('/vendors/:vendor_id/products', function(req, res, next){
+	var product = new Product(req.body);
+	product.save(function(err, product) {
+		if (err) { return next(err); }
+		res.json(product);
 	});
 	
 });
