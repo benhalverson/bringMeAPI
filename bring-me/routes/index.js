@@ -20,6 +20,8 @@ var Product = mongoose.model('Product');
 
 
 router.get('/posts', function(req, res, next) {
+	console.log('hihih');
+	
 	Post.find(function(err, posts) {
 		if (err) { next(err); }
 
