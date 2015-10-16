@@ -16,6 +16,7 @@ var Comment = mongoose.model('Comment');
 var User = mongoose.model('User');
 var Vendor = mongoose.model('Vendor');
 var City = mongoose.model('City');
+var Product = mongoose.model('Product');
 
 
 router.get('/posts', function(req, res, next) {
@@ -171,7 +172,7 @@ router.get('/vendors/:vendor_name', function(req, res, next) {
 	Vendor.findOne({ 'name': vendor_name }, function (err, vendor) {
 	  if (err) return next(err);
 	  res.json(vendor);
-	})
+	});
 });
 
 router.post('/vendors', function(req, res, next){
@@ -195,7 +196,11 @@ router.post('/vendors', function(req, res, next){
 });
 
 router.post('/vendors/:vendor_id/products', function(req, res, next){
+	console.log(req.body);
 	var product = new Product(req.body);
+
+	console.log(product);
+
 	product.save(function(err, product) {
 		if (err) { return next(err); }
 		res.json(product);

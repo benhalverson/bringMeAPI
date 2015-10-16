@@ -14,6 +14,7 @@ require('./models/Comments');
 require('./models/Users');
 require('./models/Cities');
 require('./models/Vendors');
+require('./models/Products');
 require('./config/passport');
 
 var routes = require('./routes/index');

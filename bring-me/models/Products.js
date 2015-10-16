@@ -15,4 +15,4 @@ var ProductSchema = new mongoose.Schema({
 	notes: String
 });
 
-mongoose.model('Product', PostSchema);
+mongoose.model('Product', ProductSchema);
