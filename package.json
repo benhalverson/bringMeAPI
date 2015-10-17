@@ -4,7 +4,8 @@
   "description": "Bring Me mobile app backend ",
   "main": "bringMe.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "start": "/bring-me/web.js"
   },
   "repository": {
     "type": "git",
